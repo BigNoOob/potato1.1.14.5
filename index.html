@@ -4,7 +4,6 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,user-scalable=no"/>
 <title>Brotato</title>
-<!-- Local Icons -->
 <link rel="icon" type="image/png" href="index.icon.png"/>
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
 <style>
@@ -31,31 +30,37 @@ canvas:focus{outline:none}
   display:flex;align-items:center;justify-content:center;
   padding:20px;overflow:hidden;
   transition:opacity 0.7s ease;
+  background:radial-gradient(circle at 50% 45%, #0d0d1d 0%, #05050b 100%);
+}
+
+#bg-fx{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:transparent;
 }
 
 /* ─── Background blobs ─── */
 .blob{
   position:absolute;border-radius:50%;
-  filter:blur(90px);pointer-events:none;
+  filter:blur(90px);pointer-events:none;z-index:0;
 }
 .b1{width:520px;height:520px;top:-160px;left:-160px;
-    background:radial-gradient(circle,rgba(255,107,53,0.11),transparent 70%);
+    background:radial-gradient(circle,rgba(255,107,53,0.13),transparent 70%);
     animation:blobA 13s ease-in-out infinite alternate}
 .b2{width:420px;height:420px;bottom:-120px;right:-120px;
-    background:radial-gradient(circle,rgba(79,195,247,0.08),transparent 70%);
+    background:radial-gradient(circle,rgba(79,195,247,0.09),transparent 70%);
     animation:blobB 16s ease-in-out infinite alternate}
-.b3{width:320px;height:320px;top:45%;left:55%;
-    background:radial-gradient(circle,rgba(139,92,246,0.07),transparent 70%);
+.b3{width:340px;height:340px;top:45%;left:55%;
+    background:radial-gradient(circle,rgba(105,240,174,0.07),transparent 70%);
     animation:blobA 10s ease-in-out infinite alternate-reverse}
 
 @keyframes blobA{from{transform:translate(0,0) scale(1)}to{transform:translate(35px,25px) scale(1.12)}}
 @keyframes blobB{from{transform:translate(0,0) scale(1)}to{transform:translate(-25px,35px) scale(1.08)}}
 
 .grid{
-  position:absolute;inset:0;pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.016) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,0.016) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
   background-size:54px 54px;
 }
 
@@ -64,50 +69,64 @@ canvas:focus{outline:none}
   position:relative;z-index:1;
   display:flex;flex-direction:column;
   align-items:center;gap:18px;
-  width:100%;max-width:490px;
+  width:100%;max-width:500px;
 }
 
-/* ─── Title ─── */
-.game-title{text-align:center}
+/* ─── Title & Pills ─── */
+.game-title{text-align:center;display:flex;flex-direction:column;align-items:center}
 .title-text{
-  font-size:clamp(2.6rem,9vw,3.8rem);
+  font-size:clamp(2.7rem,9vw,3.9rem);
   font-weight:900;letter-spacing:0.24em;text-transform:uppercase;
   background:linear-gradient(135deg,#ff6b35 0%,#f7931e 45%,#fbbf24 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   animation:titleGlow 3s ease-in-out infinite alternate;
   line-height:1;padding-bottom:3px;
+  margin-right:-0.24em;
 }
 @keyframes titleGlow{
-  from{filter:drop-shadow(0 0 6px rgba(255,107,53,0.3))}
-  to{filter:drop-shadow(0 0 24px rgba(255,107,53,0.8)) drop-shadow(0 0 50px rgba(251,191,36,0.25))}
+  from{filter:drop-shadow(0 0 8px rgba(255,107,53,0.35))}
+  to{filter:drop-shadow(0 0 26px rgba(255,107,53,0.85)) drop-shadow(0 0 55px rgba(251,191,36,0.3))}
 }
-.title-sub{
-  margin-top:8px;font-size:0.58rem;
-  letter-spacing:0.5em;text-transform:uppercase;
-  color:rgba(255,255,255,0.18);
+
+.pill-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px;
+  margin-top:12px;
 }
+.pill{
+  font-size:0.54rem;font-weight:800;letter-spacing:0.12em;
+  text-transform:uppercase;padding:3px 9px;border-radius:99px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);
+  backdrop-filter:blur(6px);
+}
+.pill-primal {color:#69f0ae;border-color:rgba(105,240,174,0.28);background:rgba(105,240,174,0.06)}
+.pill-abyssal{color:#4fc3f7;border-color:rgba(79,195,247,0.28);background:rgba(79,195,247,0.06)}
+.pill-paws   {color:#ffb74d;border-color:rgba(255,183,77,0.28);background:rgba(255,183,77,0.06)}
+.pill-mod    {color:#c4b5fd;border-color:rgba(196,181,253,0.32);background:rgba(139,92,246,0.1)}
 
 /* ─── Cards ─── */
-.cards{display:flex;flex-direction:column;gap:8px;width:100%}
+.cards{display:flex;flex-direction:column;gap:9px;width:100%}
 
 .card{
-  background:rgba(255,255,255,0.025);
-  border:1px solid rgba(255,255,255,0.07);
+  background:rgba(14,14,26,0.65);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.075);
   border-radius:14px;padding:14px 18px;
   position:relative;overflow:hidden;
-  transition:border-color 0.4s,background 0.4s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.45);
+  transition:border-color 0.4s,background 0.4s,transform 0.3s;
 }
-.card.active {border-color:rgba(255,255,255,0.13)}
-.card.done   {border-color:rgba(105,240,174,0.3);background:rgba(105,240,174,0.015)}
-.card.fail   {border-color:rgba(255,82,82,0.4);background:rgba(255,82,82,0.04)}
+.card.active {border-color:rgba(255,255,255,0.16)}
+.card.done   {border-color:rgba(105,240,174,0.32);background:rgba(105,240,174,0.02)}
+.card.fail   {border-color:rgba(255,82,82,0.45);background:rgba(255,82,82,0.05)}
 
 .card-glow{
   position:absolute;inset:0;opacity:0;pointer-events:none;
   transition:opacity 0.4s;border-radius:14px;
 }
-.pck-card  .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(255,107,53,0.1),transparent 60%)}
-.wasm-card .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(79,195,247,0.1),transparent 60%)}
-.init-card .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(139,92,246,0.1),transparent 60%)}
+.pck-card  .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(255,107,53,0.12),transparent 65%)}
+.wasm-card .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(79,195,247,0.12),transparent 65%)}
+.init-card .card-glow{background:radial-gradient(ellipse at 5% 50%,rgba(139,92,246,0.12),transparent 65%)}
 .card.active .card-glow,.card.done .card-glow{opacity:1}
 
 .card-top{
@@ -117,11 +136,11 @@ canvas:focus{outline:none}
 .card-name{
   font-size:0.68rem;font-weight:700;
   letter-spacing:0.12em;text-transform:uppercase;
-  color:rgba(255,255,255,0.55);
+  color:rgba(255,255,255,0.68);
 }
 .card-filename{
   font-size:0.58rem;font-family:'Courier New',monospace;
-  color:rgba(255,255,255,0.2);margin-top:2px;
+  color:rgba(255,255,255,0.28);margin-top:2px;
 }
 
 .badge{
@@ -135,51 +154,55 @@ canvas:focus{outline:none}
 
 /* ─── Progress bar ─── */
 .track{
-  height:3px;background:rgba(255,255,255,0.06);
+  height:4px;background:rgba(255,255,255,0.06);
   border-radius:99px;overflow:hidden;margin-bottom:8px;
 }
 .fill{
   height:100%;border-radius:99px;width:0%;
-  transition:width 0.35s cubic-bezier(0.4,0,0.2,1);
+  transition:width 0.3s cubic-bezier(0.4,0,0.2,1);
   position:relative;overflow:hidden;
 }
-.pck-card  .fill{background:linear-gradient(90deg,#ff6b35,#f7931e);box-shadow:0 0 8px rgba(255,107,53,0.55)}
-.wasm-card .fill{background:linear-gradient(90deg,#4fc3f7,#81d4fa);box-shadow:0 0 8px rgba(79,195,247,0.55)}
-.init-card .fill{background:linear-gradient(90deg,#8b5cf6,#c4b5fd);box-shadow:0 0 8px rgba(139,92,246,0.55)}
+.pck-card  .fill{background:linear-gradient(90deg,#ff6b35,#f7931e);box-shadow:0 0 10px rgba(255,107,53,0.6)}
+.wasm-card .fill{background:linear-gradient(90deg,#4fc3f7,#81d4fa);box-shadow:0 0 10px rgba(79,195,247,0.6)}
+.init-card .fill{background:linear-gradient(90deg,#8b5cf6,#c4b5fd);box-shadow:0 0 10px rgba(139,92,246,0.6)}
 
 .fill::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent);
-  animation:shim 2s ease-in-out infinite;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);
+  animation:shim 1.8s ease-in-out infinite;
 }
 @keyframes shim{from{transform:translateX(-200%)}to{transform:translateX(200%)}}
 
 .card-meta{
   display:flex;justify-content:space-between;align-items:baseline;
 }
-.meta-parts{font-size:0.6rem;color:rgba(255,255,255,0.28);font-family:'Courier New',monospace}
-.meta-mb   {font-size:0.66rem;font-weight:600;color:rgba(255,255,255,0.52);font-family:'Courier New',monospace}
+.meta-parts{font-size:0.6rem;color:rgba(255,255,255,0.34);font-family:'Courier New',monospace}
+.meta-mb   {font-size:0.66rem;font-weight:600;color:rgba(255,255,255,0.62);font-family:'Courier New',monospace}
 
 .card-log{
   margin-top:6px;font-size:0.59rem;font-family:'Courier New',monospace;
-  color:rgba(255,255,255,0.2);
-  height:1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:rgba(255,255,255,0.28);
+  height:1.1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
-/* init card hidden until needed */
 .init-card{display:none}
 .init-card.show{display:block}
 
-/* ─── Status / Error ─── */
+/* ─── Status / Tips ─── */
+.status-box{
+  min-height:1.8em;display:flex;align-items:center;justify-content:center;
+  padding:4px 12px;
+}
 .status-line{
-  font-size:0.63rem;color:rgba(255,255,255,0.2);
-  letter-spacing:0.07em;text-align:center;min-height:1em;
+  font-size:0.66rem;color:rgba(255,255,255,0.42);
+  letter-spacing:0.04em;text-align:center;
+  transition:opacity 0.35s ease;
 }
 
 .err-box{
   display:none;width:100%;
-  background:rgba(255,82,82,0.07);
-  border:1px solid rgba(255,82,82,0.25);
+  background:rgba(255,82,82,0.08);
+  border:1px solid rgba(255,82,82,0.3);
   border-radius:10px;padding:12px 16px;
 }
 .err-box.show{display:block}
@@ -188,7 +211,7 @@ canvas:focus{outline:none}
   text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;
 }
 .err-msg{
-  font-size:0.68rem;color:rgba(255,140,140,0.8);
+  font-size:0.68rem;color:rgba(255,140,140,0.85);
   font-family:'Courier New',monospace;word-break:break-all;line-height:1.5;
 }
 </style>
@@ -197,6 +220,7 @@ canvas:focus{outline:none}
 <canvas id="canvas"></canvas>
 
 <div id="loader">
+  <canvas id="bg-fx"></canvas>
   <div class="blob b1"></div>
   <div class="blob b2"></div>
   <div class="blob b3"></div>
@@ -206,7 +230,12 @@ canvas:focus{outline:none}
 
     <div class="game-title">
       <div class="title-text">BROTATO</div>
-      <div class="title-sub">Loading Resources</div>
+      <div class="pill-row">
+        <span class="pill pill-primal">Primal Dread</span>
+        <span class="pill pill-abyssal">Abyssal Terrors</span>
+        <span class="pill pill-paws">Paws &amp; Claws</span>
+        <span class="pill pill-mod">Custom Modded</span>
+      </div>
     </div>
 
     <div class="cards">
@@ -216,8 +245,8 @@ canvas:focus{outline:none}
         <div class="card-glow"></div>
         <div class="card-top">
           <div>
-            <div class="card-name">Game Data</div>
-            <div class="card-filename">index.pck &nbsp;&bull;&nbsp; 12 parts &nbsp;&bull;&nbsp; 195.8 MB</div>
+            <div class="card-name">Game Data &amp; DLCs</div>
+            <div class="card-filename">index.pck &nbsp;&bull;&nbsp; 12 parts &nbsp;&bull;&nbsp; 264.0 MB</div>
           </div>
           <div class="badge" id="pck-badge"
             style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.3)">Waiting</div>
@@ -225,7 +254,7 @@ canvas:focus{outline:none}
         <div class="track"><div class="fill" id="pck-fill"></div></div>
         <div class="card-meta">
           <div class="meta-parts" id="pck-parts">0 / 12 parts</div>
-          <div class="meta-mb"   id="pck-mb">0.0 / 268 MB</div>
+          <div class="meta-mb"   id="pck-mb">0.0 / 264.0 MB</div>
         </div>
         <div class="card-log" id="pck-log">Queued...</div>
       </div>
@@ -235,7 +264,7 @@ canvas:focus{outline:none}
         <div class="card-glow"></div>
         <div class="card-top">
           <div>
-            <div class="card-name">Engine</div>
+            <div class="card-name">Godot Engine</div>
             <div class="card-filename">index.wasm &nbsp;&bull;&nbsp; 2 parts &nbsp;&bull;&nbsp; 24.9 MB</div>
           </div>
           <div class="badge" id="wasm-badge"
@@ -249,13 +278,13 @@ canvas:focus{outline:none}
         <div class="card-log" id="wasm-log">Queued...</div>
       </div>
 
-      <!-- Engine init card (shown after files are ready) -->
+      <!-- Engine init card -->
       <div class="card init-card" id="init-card">
         <div class="card-glow"></div>
         <div class="card-top">
           <div>
             <div class="card-name">Starting Engine</div>
-            <div class="card-filename">Godot Runtime &nbsp;&bull;&nbsp; WebGL</div>
+            <div class="card-filename">Godot 3.7 Runtime &nbsp;&bull;&nbsp; WebGL</div>
           </div>
           <div class="badge" id="init-badge"
             style="background:rgba(139,92,246,0.15);color:#a78bfa;animation:badgePulse 1.5s ease-in-out infinite">Init</div>
@@ -269,7 +298,9 @@ canvas:focus{outline:none}
 
     </div><!-- /cards -->
 
-    <div class="status-line" id="status-line">Starting...</div>
+    <div class="status-box">
+      <div class="status-line" id="status-line">Preparing potato arsenal...</div>
+    </div>
 
     <div class="err-box" id="err-box">
       <div class="err-title">&#9888; Load Failed</div>
@@ -279,22 +310,84 @@ canvas:focus{outline:none}
   </div><!-- /content -->
 </div><!-- /loader -->
 
-<!-- Local Script -->
 <script src="index.js"></script>
 <script>
-// CDN constant is now set to current directory
 const CDN = './';
 const MB  = 1048576;
 const fmt = b => (b / MB).toFixed(1);
 
+const PCK_BYTES  = 276824064;
+const WASM_BYTES = 26156492;
+
 const GODOT_CONFIG = {
   args: [], canvasResizePolicy: 2, executable: 'index',
   experimentalVK: false,
-  fileSizes: { 'index.pck': 205270016, 'index.wasm': 26156492 },
+  fileSizes: { 'index.pck': PCK_BYTES, 'index.wasm': WASM_BYTES },
   focusCanvas: true, gdnativeLibs: []
 };
 
-/* ── helpers ── */
+/* ── Floating Material Orbs Background ── */
+(() => {
+  const fx = document.getElementById('bg-fx');
+  if (!fx) return;
+  const ctx = fx.getContext('2d');
+  const resize = () => { fx.width = window.innerWidth; fx.height = window.innerHeight; };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const orbs = Array.from({ length: 34 }, () => ({
+    x: Math.random() * fx.width,
+    y: Math.random() * fx.height,
+    r: Math.random() * 2.6 + 1.2,
+    vy: Math.random() * 0.55 + 0.2,
+    vx: (Math.random() - 0.5) * 0.25,
+    alpha: Math.random() * 0.4 + 0.15
+  }));
+
+  function draw() {
+    if (document.getElementById('loader').style.display === 'none') return;
+    ctx.clearRect(0, 0, fx.width, fx.height);
+    for (const o of orbs) {
+      o.y -= o.vy;
+      o.x += o.vx;
+      if (o.y < -10) { o.y = fx.height + 10; o.x = Math.random() * fx.width; }
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(105, 240, 174, ${o.alpha})`;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(105, 240, 174, 0.5)';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── Rotating Tips & Mod Notes ── */
+const TIPS = [
+  "Tip: Harvesting scales exponentially—invest early!",
+  "Custom Build: Recurse, Curse Indicator & custom item active.",
+  "Primal Dread: Evolve your weapons in the jungle.",
+  "Tip: Speed helps you grab materials before waves end.",
+  "Abyssal Terrors: Watch out for Curse stacks on high-tier items.",
+  "Paws & Claws: Companion builds scale heavily with Engineering."
+];
+
+let tipIndex = 0;
+const tipTimer = setInterval(() => {
+  const el = document.getElementById('status-line');
+  const err = document.getElementById('err-box');
+  if (el && err && !err.classList.contains('show')) {
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.textContent = TIPS[tipIndex % TIPS.length];
+      el.style.opacity = '1';
+      tipIndex++;
+    }, 250);
+  }
+}, 3400);
+
+/* ── Helpers ── */
 const $  = id => document.getElementById(id);
 const tx = (id, v) => { const e = $(id); if (e) e.textContent = v; };
 const fw = (id, p) => { const e = $(id); if (e) e.style.width = Math.min(100, p) + '%'; };
@@ -326,12 +419,13 @@ const BADGE = {
 };
 
 function showError(msg) {
+  clearInterval(tipTimer);
   $('err-box').classList.add('show');
   tx('err-msg', msg);
   setStatus('Load failed. See above for details.');
 }
 
-/* ── fetch + merge all parts for one file ── */
+/* ── Fetch + Merge All Parts ── */
 async function fetchParts(key, filename, count, padded, totalBytes) {
   const bk = BADGE[key];
   cardState(key, 'active');
@@ -339,11 +433,12 @@ async function fetchParts(key, filename, count, padded, totalBytes) {
 
   const parts = [];
   let fetched = 0;
+  const startTime = performance.now();
 
   for (let i = 1; i <= count; i++) {
-    const suffix  = padded ? String(i).padStart(2, '0') : String(i);
-    const part    = `${filename}.part${suffix}`;
-    tx(key + '-log', '\u21b3 Fetching ' + part);
+    const suffix = padded ? String(i).padStart(2, '0') : String(i);
+    const part   = `${filename}.part${suffix}`;
+    tx(key + '-log', `\u21b3 Fetching ${part}...`);
 
     const resp = await fetch(CDN + part);
     if (!resp.ok) throw new Error(`HTTP ${resp.status} \u2014 ${part}`);
@@ -352,25 +447,31 @@ async function fetchParts(key, filename, count, padded, totalBytes) {
     parts.push(buf);
     fetched += buf.byteLength;
 
+    const elapsedSec = Math.max(0.05, (performance.now() - startTime) / 1000);
+    const speedMBs   = (fetched / MB / elapsedSec).toFixed(1);
+
     fw(key + '-fill', (fetched / totalBytes) * 100);
     tx(key + '-parts', `${i} / ${count} parts`);
     tx(key + '-mb',    `${fmt(fetched)} / ${fmt(totalBytes)} MB`);
+    tx(key + '-log',   `\u21b3 ${part} (${speedMBs} MB/s)`);
   }
 
-  /* concatenate ArrayBuffers */
   const merged = new Uint8Array(parts.reduce((s, b) => s + b.byteLength, 0));
   let offset = 0;
   for (const p of parts) { merged.set(new Uint8Array(p), offset); offset += p.byteLength; }
 
+  const totalSec = Math.max(0.1, (performance.now() - startTime) / 1000);
+  const avgSpeed = (fetched / MB / totalSec).toFixed(1);
+
   cardState(key, 'done');
   setBadge(key, 'Ready', BADGE.ok.bg, BADGE.ok.color, false);
   fw(key + '-fill', 100);
-  tx(key + '-log', `\u2713 ${count} parts \u2014 ${fmt(fetched)} MB`);
+  tx(key + '-log', `\u2713 ${count} parts merged \u2014 ${fmt(fetched)} MB (${avgSpeed} MB/s)`);
 
   return merged.buffer;
 }
 
-/* ── main ── */
+/* ── Main Boot ── */
 (async () => {
   if (!Engine.isWebGLAvailable()) {
     showError('WebGL is unavailable. Try a different browser or enable hardware acceleration in your browser settings.');
@@ -378,22 +479,18 @@ async function fetchParts(key, filename, count, padded, totalBytes) {
   }
 
   try {
-    setStatus('Loading local resources...');
-
-    /* fetch both files in parallel, each sequentially by part */
     const [pckBuf, wasmBuf] = await Promise.all([
-      fetchParts('pck',  'index.pck',  12, true,  205270016),
-      fetchParts('wasm', 'index.wasm',  2, false,  26156492)
+      fetchParts('pck',  'index.pck',  12, true,  PCK_BYTES),
+      fetchParts('wasm', 'index.wasm',  2, false, WASM_BYTES)
     ]);
 
-    setStatus('Assembling engine...');
+    clearInterval(tipTimer);
+    setStatus('Assembling WebGL runtime...');
 
-    /* blob URL for the pck */
     const pckUrl = URL.createObjectURL(
       new Blob([pckBuf], { type: 'application/octet-stream' })
     );
 
-    /* Intercept window.fetch for the merged wasm */
     const _fetch = window.fetch.bind(window);
     window.fetch = function (input, init) {
       const url = input instanceof Request ? input.url : String(input);
@@ -406,14 +503,13 @@ async function fetchParts(key, filename, count, padded, totalBytes) {
       return _fetch(input, init);
     };
 
-    /* show init card */
     $('init-card').classList.add('show');
     cardState('init', 'active');
 
     const engine = new Engine(GODOT_CONFIG);
 
     await engine.startGame({
-      executable: CDN + 'index',   /* Local index.worker.js */
+      executable: CDN + 'index',
       mainPack:   pckUrl,
       onProgress(current, total) {
         if (total > 0) {
@@ -425,7 +521,6 @@ async function fetchParts(key, filename, count, padded, totalBytes) {
       }
     });
 
-    /* ── game started ── */
     cardState('init', 'done');
     setBadge('init', 'Ready', BADGE.ok.bg, BADGE.ok.color, false);
     setStatus('');
